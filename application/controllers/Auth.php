@@ -111,7 +111,6 @@ class Auth extends CI_Controller
             $this->load->view('template/auth_footer');
         } else {
 
-
             $data = [
                 'nama' => htmlspecialchars($this->input->post('nama', true)),
                 'no_induk' => htmlspecialchars($this->input->post('no_induk', true)),

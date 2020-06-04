@@ -1,4 +1,5 @@
 <!-- Content Header (Page header) -->
+<script src="https://cdn.ckeditor.com/4.14.0/standard/ckeditor.js"></script>
 <section class="content">
     <form class="form" method="post" action="<?= base_url('dosen/tanggapan') ?>">
         <!-- Default box -->
@@ -53,41 +54,49 @@
                                             <tr>
                                                 <th scope="row"><?= $i; ?></th>
                                                 <td><?= $mhs->progres; ?></td>
+                                                <input type="hidden" name="nama" value="<?php echo $mhs->nama; ?>">
+                                                <input type="hidden" name="progres" value="<?php echo $mhs->progres; ?>">
                                                 <td>
-                                                    <a class="btn btn-primary btn-sm" href="<?php echo base_url(); ?>assets/pdf/<?php echo $mhs->berkas; ?>">
+                                                    <a class="btn btn-primary btn-sm" target="_blank-page" href="<?php echo base_url(); ?>assets/pdf/<?php echo $mhs->berkas; ?>">
                                                         Cek Bukti
                                                     </a>
                                                 </td>
                                                 <td><?= $mhs->waktu; ?></td>
                                                 <td>
-                                                    <button type="button" class="btn btn-primary" data-toggle="modal" data-target="#exampleModalLong">
-                                                        Catatan
-                                                    </button>
-                                                    <!-- Modal -->
-                                                    <div class="modal fade" id="exampleModalLong" tabindex="-1" role="dialog" aria-labelledby="exampleModalLongTitle" aria-hidden="true">
-                                                        <div class="modal-dialog" role="document">
-                                                            <div class="modal-content">
-                                                                <div class="modal-header">
-                                                                    <h5 class="modal-title" id="exampleModalLongTitle">Catatan / Komentar</h5>
-                                                                    <button type="button" class="close" data-dismiss="modal" aria-label="Close">
-                                                                        <span aria-hidden="true">&times;</span>
-                                                                    </button>
-                                                                </div>
-                                                                <div class="modal-body">
-                                                                    <div class="card-body">
-                                                                        <div class="form-group mb-1">
-                                                                            <label for="exampleTextarea">Catatan kepada mahasiswa</label>
-                                                                            <textarea name="catatan" class="form-control" id="exampleTextarea" rows="3"></textarea>
+                                                    <form class="form" method="post" action="<?php echo base_url(); ?>dosen/tanggapan">
+                                                        <button type="button" class="btn btn-primary" data-toggle="modal" data-target="#exampleModalLong">
+                                                            Catatan
+                                                        </button>
+                                                        <!-- Modal -->
+                                                        <div class="modal fade" id="exampleModalLong" tabindex="-1" role="dialog" aria-labelledby="exampleModalLongTitle" aria-hidden="true">
+                                                            <div class="modal-dialog" role="document">
+                                                                <div class="modal-content">
+                                                                    <div class="modal-header">
+                                                                        <h5 class="modal-title" id="exampleModalLongTitle">Catatan / Komentar</h5>
+                                                                        <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                                                                            <span aria-hidden="true">&times;</span>
+                                                                        </button>
+                                                                    </div>
+                                                                    <input type="hidden" name="nim" value="<?php echo $mhs->nim; ?>">
+                                                                    <div class="modal-body">
+                                                                        <div class="card-body">
+                                                                            <div class="form-group mb-1">
+                                                                                <label for="exampleTextarea">Catatan kepada mahasiswa</label>
+                                                                                <textarea name="editor1" id="editor1"></textarea>
+                                                                                <script>
+                                                                                    CKEDITOR.replace('editor1');
+                                                                                </script>
+                                                                            </div>
                                                                         </div>
                                                                     </div>
-                                                                </div>
-                                                                <div class="modal-footer">
-                                                                    <a href="<?php echo site_url(); ?>dosen/tanggapan/<?= $mhs->nim; ?>" class=" btn btn-sm btn-light-primary font-weight-bolder py-2 px-5">Terima</a>
-                                                                    <button type="button" class="btn btn-secondary" data-dismiss="modal">Close</button>
+                                                                    <div class="modal-footer">
+                                                                        <button type="submit" class="btn btn-secondary">Submit</button>
+                                                                        <button type="button" class="btn btn-secondary" data-dismiss="modal">Close</button>
+                                                                    </div>
                                                                 </div>
                                                             </div>
                                                         </div>
-                                                    </div>
+                                                    </form>
                                                 </td>
                                             </tr>
                                             <?php $i++; ?>
@@ -113,8 +122,3 @@
 <!--end::Entry-->
 </div>
 <!--end::Content-->
-
-<!-- Button trigger modal -->
-<button type="button" class="btn btn-primary" data-toggle="modal" data-target="#exampleModalLong">
-    Launch demo modal
-</button>

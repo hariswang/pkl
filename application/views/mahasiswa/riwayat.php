@@ -1,10 +1,10 @@
 <!-- Content Header (Page header) -->
 <section class="content">
-  <form class="form" method="post" action="<?= base_url('koordinator/terima') ?>">
+  <form class="form">
     <!-- Default box -->
     <div class="card">
       <div class="card-header">
-        <h3 class="card-title">Pengajuan Judul Tugas Akhir</h3>
+        <h3 class="card-title">Daftar Laporan Yang Telah Dilakukan</h3>
       </div>
       <div class="card-body">
 
@@ -40,13 +40,10 @@
                   <thead>
                     <tr>
                       <th>No.</th>
-                      <th>NIM</th>
-                      <th>Nama</th>
-                      <th>Judul Proposal</th>
-                      <th>Berkas</th>
-                      <th>Dosen 1</th>
-                      <th>Dosen 2</th>
-                      <th>Aksi</th>
+                      <th>Laporan Progres</th>
+                      <th>Berkas Proposal</th>
+                      <th>Waktu Penyerahan</th>
+                      <th>Komentar</th>
                     </tr>
                   </thead>
                   <tbody>
@@ -55,19 +52,52 @@
                     <?php foreach ($mahasiswa as $mhs) : ?>
                       <tr>
                         <th scope="row"><?= $i; ?></th>
-                        <td><?= $mhs->nim; ?></td>
-                        <td><?= $mhs->nama; ?></td>
-                        <td><?= $mhs->judul; ?></td>
+                        <td><?= $mhs->progres; ?></td>
                         <td>
                           <a class="btn btn-primary btn-sm" target="_blank-page" href="<?php echo base_url(); ?>assets/pdf/<?php echo $mhs->berkas; ?>">
                             Cek Bukti
                           </a>
                         </td>
-                        <td><?= $mhs->pildos1; ?></td>
-                        <td><?= $mhs->pildos2; ?></td>
+                        <td><?= $mhs->waktu; ?></td>
                         <td>
-                          <a href="<?php echo site_url(); ?>koordinator/terima/<?= $mhs->id; ?>" class=" btn btn-sm btn-light-primary font-weight-bolder py-2 px-5">Terima</a>
-                          <a href="<?php echo site_url(); ?>koordinator/hapus/<?= $mhs->id; ?>" class=" btn btn-sm btn-light-danger font-weight-bolder py-2 px-5">Tolak</a>
+                          <button type="button" class="btn btn-primary" data-toggle="modal" data-target="#exampleModalLong">
+                            Catatan
+                          </button>
+                          <!-- Modal -->
+                          <div class="modal fade" id="exampleModalLong" tabindex="-1" role="dialog" aria-labelledby="exampleModalLongTitle" aria-hidden="true">
+                            <div class="modal-dialog" role="document">
+                              <div class="modal-content">
+                                <div class="modal-header">
+                                  <h5 class="modal-title" id="exampleModalLongTitle">Catatan / Komentar dari Dosen</h5>
+                                  <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                                    <span aria-hidden="true">&times;</span>
+                                  </button>
+                                </div>
+                                <div class="modal-body">
+                                  <div class="card-body">
+                                    <div class="form-group mb-1">
+                                      <label for="exampleTextarea">Catatan :</label>
+                                      <div class="card card-custom gutter-b">
+
+                                        <div class="card-body">
+                                          <!--begin: Datatable-->
+                                          <table class="table table-bordered table-checkable" id="kt_datatable">
+                                            <tbody>
+                                              <tr>
+                                                <td><?= $mhs->catatan; ?></td>
+                                              </tr>
+                                            </tbody>
+                                          </table>
+                                        </div>
+                                      </div>
+                                    </div>
+                                  </div>
+                                  <div class="modal-footer">
+                                    <button type="button" class="btn btn-secondary" data-dismiss="modal">Close</button>
+                                  </div>
+                                </div>
+                              </div>
+                            </div>
                         </td>
                       </tr>
                       <?php $i++; ?>
@@ -84,7 +114,6 @@
       </div>
     </div>
   </form>
-
 </section>
 <!-- /.content -->
 

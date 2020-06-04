@@ -17,9 +17,9 @@ class Mahasiswa extends CI_Controller
         $data['user'] = $this->db->get_where('user', ['email' => $this->session->userdata('email')])->row_array();
 
         $data['dosen'] = $this->db->get('dosen')->result();
-        $this->load->view('mahasiswa/header_mahasiswa', $data);
+        $this->load->view('mahasiswa/header', $data);
         $this->load->view('mahasiswa/index', $data);
-        $this->load->view('mahasiswa/footer_mahasiswa', $data);
+        $this->load->view('mahasiswa/footer', $data);
     }
 
     public function step1()
@@ -108,8 +108,7 @@ class Mahasiswa extends CI_Controller
                 'progres' => $this->input->post('judul'),
             ];
 
-            $config['allowed_types']        = 'gif|jpg|png';
-            $config['max_size']             = 2048;
+            $config['allowed_types']        = 'pdf';
             $config['encrypt_name']         = TRUE;
             $config['upload_path']          = './assets/img/';
             $this->load->library('upload', $config);
@@ -133,8 +132,15 @@ class Mahasiswa extends CI_Controller
         }
     }
 
-    public function progres()
+    public function riwayat()
     {
+        $this->db->group_by("nama");
+        $data['mahasiswa'] = $this->db->get('bimbingan_proposal')->result();
+        $data['user'] = $this->db->get_where('user', ['email' => $this->session->userdata('email')])->row_array();
+
+        $this->load->view('mahasiswa/header', $data);
+        $this->load->view('mahasiswa/riwayat', $data);
+        $this->load->view('mahasiswa/footer', $data);
     }
 
     public function proposal()
