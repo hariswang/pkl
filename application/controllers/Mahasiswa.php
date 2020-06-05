@@ -167,4 +167,90 @@ class Mahasiswa extends CI_Controller
     {
         $this->load->view('mahasiswa/proposal');
     }
+
+    public function absensi()
+    {
+        $data['user'] = $this->db->get_where('user', ['email' => $this->session->userdata('email')])->row_array();
+
+        $data['dosen'] = $this->db->get('dosen')->result();
+        $this->load->view('mahasiswa/header', $data);
+        $this->load->view('mahasiswa/absensi', $data);
+        $this->load->view('mahasiswa/footer', $data);
+    }
+
+    public function tambah_absensi()
+    {
+        $nama = $this->session->userdata('nama');
+        $nim = $this->session->userdata('no_induk');
+
+        $this->form_validation->set_rules('judul_berita', 'Judul_berita', 'required|trim');
+
+        if ($this->form_validation->run() == false) {
+            $this->session->set_flashdata('allert', '<div class="alert alert-custom alert-light-danger fade show mb-5" role="alert">
+            <div class="alert-icon"><i class="flaticon-check"></i></div>
+            <div class="alert-text">Tolong lengkapi kolom isian !</div>
+            <div class="alert-close">
+                <button type="button" class="close" data-dismiss="alert" aria-label="Close">
+                    <span aria-hidden="true"><i class="ki ki-close"></i></span>
+                </button>
+            </div>
+        </div>');
+            redirect('mahasiswa/absensi');
+        } else {
+            $data = [
+                'nama' => $nama,
+                'nim' => $nim,
+                'judul_berita' => $this->input->post('judul_berita')
+            ];
+
+            $d = [
+                'nama' => $nama,
+                'nim' => $nim,
+                'judul_berita' => $this->input->post('judul_berita')
+            ];
+
+            $config['allowed_types']        = 'pdf';
+            $config['encrypt_name']         = TRUE;
+            $config['upload_path']          = './assets/pdf/';
+            $this->load->library('upload', $config);
+
+            if ($this->upload->do_upload('berkas')) {
+                $data['berkas'] = $this->upload->data('file_name');
+                $d['berkas'] = $this->upload->data('file_name');
+
+                $this->db->insert('absensi', $data);
+                $this->db->insert('cek_absensi', $d);
+                $this->session->set_flashdata('message', '<div class="alert alert-custom alert-light-success fade show mb-5" role="alert">
+                    <div class="alert-icon"><i class="flaticon-check"></i></div>
+                    <div class="alert-text">Data berhasil disubmit !</div>
+                    <div class="alert-close">
+                        <button type="button" class="close" data-dismiss="alert" aria-label="Close">
+                            <span aria-hidden="true"><i class="ki ki-close"></i></span>
+                        </button>
+                    </div>
+                </div>');
+                redirect('mahasiswa/absensi');
+            } else {
+                $this->session->set_flashdata('message', '<div class="alert alert-custom alert-light-danger fade show mb-5" role="alert">
+                    <div class="alert-icon"><i class="flaticon-check"></i></div>
+                    <div class="alert-text">File berkas harus PDF !</div>
+                    <div class="alert-close">
+                        <button type="button" class="close" data-dismiss="alert" aria-label="Close">
+                            <span aria-hidden="true"><i class="ki ki-close"></i></span>
+                        </button>
+                    </div>
+                </div>');
+                redirect('mahasiswa/absensi');
+            }
+        }
+    }
+
+    public function cek_absensi()
+    {
+        $data['user'] = $this->db->get_where('user', ['email' => $this->session->userdata('email')])->row_array();
+        $data['cek_absensi'] = $this->db->get_where('cek_absensi');
+        $data['mahasiswa'] = $this->db->get('cek_absensi')->result();
+        $this->load->view('mahasiswa/cek_absensi', $data);
+
+    }
 }
