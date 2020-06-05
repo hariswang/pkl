@@ -70,7 +70,7 @@
                                 <label class="font-size-h6 font-weight-bolder text-dark">Upload bukti pembayaran</label>
                                 <div></div>
                                 <div class="custom-file">
-                                    <input type="file" name="userfile" class="custom-file-input" id="customFile" />
+                                    <input type="file" name="userfile" class="custom-file-input" id="customFile" required />
                                     <label class="custom-file-label" for="customFile">Choose file</label>
                                 </div>
                             </div>

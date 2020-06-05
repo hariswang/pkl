@@ -12,35 +12,37 @@ class Dosen extends CI_Controller
 
     public function index()
     {
+        $data['user'] = $this->db->get_where('user', ['email' => $this->session->userdata('email')])->row_array();
+        $nama = $this->session->userdata('nama');
         $data['pengajuan_judul'] = $this->db->get_where('pengajuan_judul', ['step' => $this->session->userdata('step')])->row_array();
         $this->db->where('step', 2);
+        $this->db->where('pildos1', $nama)->or_where('pildos2', $nama);
         $data['mahasiswa'] = $this->db->get('pengajuan_judul')->result();
-        $this->load->view('dosen/header');
+        $this->load->view('dosen/header', $data);
         $this->load->view('dosen/index', $data);
-        $this->load->view('dosen/footer');
+        $this->load->view('dosen/footer', $data);
     }
 
     public function cek_mhs($nim)
     {
+        $data['user'] = $this->db->get_where('user', ['email' => $this->session->userdata('email')])->row_array();
         $data['bimbingan_proposal'] = $this->db->get_where('bimbingan_proposal', ['nim' => $this->session->userdata('nim')])->row_array();
         $this->db->where('nim', $nim);
         $data['mahasiswa'] = $this->db->get('bimbingan_proposal')->result();
-        $this->load->view('dosen/header');
+        $this->load->view('dosen/header', $data);
         $this->load->view('dosen/laporan_prg', $data);
-        $this->load->view('dosen/footer');
+        $this->load->view('dosen/footer', $data);
     }
 
-    public function tanggapan()
+    public function tanggapan($id)
     {
+        $this->db->where('id', $id);
         $nim = $this->input->post('nim');
         $data = [
-            'nama' => $this->input->post('nama'),
-            'nim' => $this->input->post('nim'),
-            'progres' => $this->input->post('progres'),
-            'catatan' => $this->input->post('editor1')
+            'catatan' => $this->input->post('editor1'),
         ];
 
-        $this->db->insert('bimbingan_proposal', $data);
+        $this->db->update('bimbingan_proposal', $data);
         $this->session->set_flashdata('message', '<div class="alert alert-custom alert-light-success fade show mb-5" role="alert">
                 <div class="alert-icon"><i class="flaticon-check"></i></div>
                 <div class="alert-text">Data berhasil disubmit !</div>
@@ -56,12 +58,13 @@ class Dosen extends CI_Controller
 
     public function ba_bimbingan()
     {
+        $data['user'] = $this->db->get_where('user', ['email' => $this->session->userdata('email')])->row_array();
         $data['pengajuan_judul'] = $this->db->get_where('pengajuan_judul', ['step' => $this->session->userdata('step')])->row_array();
         $this->db->where('step', 2);
         $data['mahasiswa'] = $this->db->get('pengajuan_judul')->result();
-        $this->load->view('dosen/header');
+        $this->load->view('dosen/header', $data);
         $this->load->view('dosen/ba_bimbingan', $data);
-        $this->load->view('dosen/footer');
+        $this->load->view('dosen/footer', $data);
     }
 
     public function tambah_absensi()

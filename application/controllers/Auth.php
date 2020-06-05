@@ -130,10 +130,8 @@ class Auth extends CI_Controller
 
             if ($this->upload->do_upload('userfile')) {
                 $data['berkas'] = $this->upload->data('file_name');
-            }
-
-            $this->db->insert('user', $data);
-            $this->session->set_flashdata('message', '<div class="alert alert-custom alert-light-success fade show mb-5" role="alert">
+                $this->db->insert('user', $data);
+                $this->session->set_flashdata('message', '<div class="alert alert-custom alert-light-success fade show mb-5" role="alert">
                     <div class="alert-icon"><i class="flaticon-check"></i></div>
                     <div class="alert-text">Anda telah melakukan registrasi, Admin akan melakukan aktivasi akun anda segera !</div>
                     <div class="alert-close">
@@ -142,7 +140,19 @@ class Auth extends CI_Controller
                         </button>
                     </div>
                 </div>');
-            redirect('auth');
+                redirect('auth');
+            } else {
+                $this->session->set_flashdata('message', '<div class="alert alert-custom alert-light-danger fade show mb-5" role="alert">
+                    <div class="alert-icon"><i class="flaticon-check"></i></div>
+                    <div class="alert-text">Upload hanya file gambar berformat gif, jpg atau png !</div>
+                    <div class="alert-close">
+                        <button type="button" class="close" data-dismiss="alert" aria-label="Close">
+                            <span aria-hidden="true"><i class="ki ki-close"></i></span>
+                        </button>
+                    </div>
+                </div>');
+                redirect('auth/registration');
+            }
         }
     }
 

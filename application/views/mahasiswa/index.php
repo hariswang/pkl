@@ -131,7 +131,7 @@
                             <label>Upload Berkas Proposal</label>
                             <div></div>
                             <div class="custom-file">
-                              <input type="file" class="custom-file-input" id="customFile" name="berkas" />
+                              <input type="file" class="custom-file-input" id="customFile" name="berkas" required />
                               <label class="custom-file-label" for="customFile">Choose PDF file</label>
                             </div>
                           </div>

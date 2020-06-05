@@ -41,7 +41,7 @@
                                     </div>
                                     <div class="card-footer">
                                         <button type="submit" class="btn btn-primary mr-2">Submit</button>
-                                        <button type="reset" class="btn btn-secondary">Cancel</button>
+                                        <button type="button" class="btn btn-secondary" data-dismiss="modal">Close</button>
                                     </div>
                                 </div>
                             </form>

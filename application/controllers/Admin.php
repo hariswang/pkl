@@ -25,6 +25,13 @@ class Admin extends CI_Controller
         redirect('admin');
     }
 
+    public function hapus($id)
+    {
+        $this->db->where('id', $id);
+        $this->db->delete('user');
+        redirect('admin');
+    }
+
     public function kelulusan()
     {
         $this->load->view('admin/kelulusan');

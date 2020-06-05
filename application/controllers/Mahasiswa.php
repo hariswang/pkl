@@ -66,11 +66,10 @@ class Mahasiswa extends CI_Controller
             if ($this->upload->do_upload('berkas')) {
                 $data['berkas'] = $this->upload->data('file_name');
                 $d['berkas'] = $this->upload->data('file_name');
-            }
 
-            $this->db->insert('pengajuan_judul', $data);
-            $this->db->insert('bimbingan_proposal', $d);
-            $this->session->set_flashdata('message', '<div class="alert alert-custom alert-light-success fade show mb-5" role="alert">
+                $this->db->insert('pengajuan_judul', $data);
+                $this->db->insert('bimbingan_proposal', $d);
+                $this->session->set_flashdata('message', '<div class="alert alert-custom alert-light-success fade show mb-5" role="alert">
                     <div class="alert-icon"><i class="flaticon-check"></i></div>
                     <div class="alert-text">Data berhasil disubmit !</div>
                     <div class="alert-close">
@@ -79,7 +78,19 @@ class Mahasiswa extends CI_Controller
                         </button>
                     </div>
                 </div>');
-            redirect('mahasiswa');
+                redirect('mahasiswa');
+            } else {
+                $this->session->set_flashdata('message', '<div class="alert alert-custom alert-light-danger fade show mb-5" role="alert">
+                    <div class="alert-icon"><i class="flaticon-check"></i></div>
+                    <div class="alert-text">File berkas harus PDF !</div>
+                    <div class="alert-close">
+                        <button type="button" class="close" data-dismiss="alert" aria-label="Close">
+                            <span aria-hidden="true"><i class="ki ki-close"></i></span>
+                        </button>
+                    </div>
+                </div>');
+                redirect('mahasiswa');
+            }
         }
     }
 
@@ -115,11 +126,8 @@ class Mahasiswa extends CI_Controller
 
             if ($this->upload->do_upload('berkas')) {
                 $data['berkas'] = $this->upload->data('file_name');
-            }
-
-
-            $this->db->insert('bimbingan_proposal', $data);
-            $this->session->set_flashdata('message', '<div class="alert alert-custom alert-light-success fade show mb-5" role="alert">
+                $this->db->insert('bimbingan_proposal', $data);
+                $this->session->set_flashdata('message', '<div class="alert alert-custom alert-light-success fade show mb-5" role="alert">
                     <div class="alert-icon"><i class="flaticon-check"></i></div>
                     <div class="alert-text">Laporan bimbingan telah terkirim ke dosen !</div>
                     <div class="alert-close">
@@ -128,7 +136,19 @@ class Mahasiswa extends CI_Controller
                         </button>
                     </div>
                 </div>');
-            redirect('mahasiswa');
+                redirect('mahasiswa');
+            } else {
+                $this->session->set_flashdata('message', '<div class="alert alert-custom alert-light-danger fade show mb-5" role="alert">
+                <div class="alert-icon"><i class="flaticon-check"></i></div>
+                <div class="alert-text">File berkas harus berformat PDF !</div>
+                <div class="alert-close">
+                    <button type="button" class="close" data-dismiss="alert" aria-label="Close">
+                        <span aria-hidden="true"><i class="ki ki-close"></i></span>
+                    </button>
+                </div>
+            </div>');
+                redirect('mahasiswa');
+            }
         }
     }
 

@@ -14,20 +14,29 @@ class Koordinator extends CI_Controller
     public function index()
     {
         $data['pengajuan_judul'] = $this->db->get_where('pengajuan_judul', ['step' => $this->session->userdata('step')])->row_array();
+        $data['user'] = $this->db->get_where('user', ['email' => $this->session->userdata('email')])->row_array();
         $this->db->where('step', 1);
         $data['mahasiswa'] = $this->db->get('pengajuan_judul')->result();
-        $this->load->view('koordinator/header');
+        $this->load->view('koordinator/header', $data);
         $this->load->view('koordinator/index', $data);
-        $this->load->view('koordinator/footer');
+        $this->load->view('koordinator/footer', $data);
+    }
+
+    public function hapus($id)
+    {
+        $this->db->where('id', $id);
+        $this->db->delete('pengajuan_judul');
+        $this->db->delete('bimbingan_proposal');
+        redirect('koordinator');
     }
 
     public function index_dosen()
     {
-        $data['pengajuan_judul'] = $this->db->get_where('user', ['email' => $this->session->userdata('email')])->row_array();
+        $data['user'] = $this->db->get_where('user', ['email' => $this->session->userdata('email')])->row_array();
         $result['dosen'] = $this->db->get('dosen')->result();
-        $this->load->view('koordinator/header');
+        $this->load->view('koordinator/header', $data);
         $this->load->view('koordinator/index_dosen', $result);
-        $this->load->view('koordinator/footer');
+        $this->load->view('koordinator/footer', $data);
     }
 
     public function tambah_dosen()

@@ -1,7 +1,7 @@
 <!-- Content Header (Page header) -->
 <script src="https://cdn.ckeditor.com/4.14.0/standard/ckeditor.js"></script>
 <section class="content">
-    <form class="form" method="post" action="<?= base_url('dosen/tanggapan') ?>">
+    <form class="form" method="post" action="<?= base_url('dosen/tanggapan/') ?>">
         <!-- Default box -->
         <div class="card">
             <div class="card-header">
@@ -56,6 +56,7 @@
                                                 <td><?= $mhs->progres; ?></td>
                                                 <input type="hidden" name="nama" value="<?php echo $mhs->nama; ?>">
                                                 <input type="hidden" name="progres" value="<?php echo $mhs->progres; ?>">
+                                                <input type="hidden" name="berkas" value="<?php echo $mhs->berkas; ?>">
                                                 <td>
                                                     <a class="btn btn-primary btn-sm" target="_blank-page" href="<?php echo base_url(); ?>assets/pdf/<?php echo $mhs->berkas; ?>">
                                                         Cek Bukti
@@ -90,7 +91,7 @@
                                                                         </div>
                                                                     </div>
                                                                     <div class="modal-footer">
-                                                                        <button type="submit" class="btn btn-secondary">Submit</button>
+                                                                        <a href="<?php echo site_url(); ?>dosen/tanggapan/<?= $mhs->id; ?>" class=" btn btn-sm btn-light-primary font-weight-bolder py-2 px-5">Submit</a>
                                                                         <button type="button" class="btn btn-secondary" data-dismiss="modal">Close</button>
                                                                     </div>
                                                                 </div>

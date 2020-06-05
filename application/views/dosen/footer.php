@@ -41,14 +41,13 @@
         <!--begin::Header-->
         <div class="d-flex align-items-center mt-5">
             <div class="symbol symbol-100 mr-5">
-                <div class="symbol-label" style="background-image:url('<?= base_url('assets/'); ?>/media/users/300_21.jpg')"></div>
-                <i class="symbol-badge bg-success"></i>
+                <img class="img-profile rounded-circel" src="<?= base_url('assets/img/profile/') . $user['image'];  ?>">
             </div>
             <div class="d-flex flex-column">
-                <a href="#" class="font-weight-bold font-size-h5 text-dark-75 text-hover-primary">James Jones</a>
+                <a href="#" class="font-weight-bold font-size-h5 text-dark-75 text-hover-primary"><?= $user['nama']; ?></a>
                 <div class="text-muted mt-1">Dosen</div>
                 <div class="navi mt-2">
-                    <a href="#" class="navi-item">
+                    <a class="navi-item">
                         <span class="navi-link p-0 pb-2">
                             <span class="navi-icon mr-1">
                                 <span class="svg-icon svg-icon-lg svg-icon-primary">
@@ -63,16 +62,13 @@
                                     <!--end::Svg Icon-->
                                 </span>
                             </span>
-                            <span class="navi-text text-muted text-hover-primary">jm@softplus.com</span>
+                            <span class="navi-text text-muted text-hover-primary"><?= $user['email']; ?></span>
                         </span>
                     </a>
-                    <a href="<?php echo site_url(); ?>/Auth/logout" class="btn btn-sm btn-light-primary font-weight-bolder py-2 px-5">Sign Out</a>
+                    <a href="<?php echo site_url(); ?>/Auth/logout" class=" btn btn-sm btn-light-primary font-weight-bolder py-2 px-5">Log Out</a>
                 </div>
             </div>
         </div>
-        <!--end::Header-->
-        <!--begin::Separator-->
-        <div class="separator separator-dashed mt-8 mb-5"></div>
         <!--end::Separator-->
     </div>
     <!--end::Content-->
