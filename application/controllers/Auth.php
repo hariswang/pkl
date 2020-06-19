@@ -121,6 +121,11 @@ class Auth extends CI_Controller
                 'is_active' => 0,
                 'date_created' => time()
             ];
+            $d = [
+                'nama' => htmlspecialchars($this->input->post('nama', true)),
+                'nim' => htmlspecialchars($this->input->post('no_induk', true)),
+                'step' => 1
+            ];
 
             $config['allowed_types']        = 'gif|jpg|png';
             $config['max_size']             = 2048;
@@ -131,6 +136,7 @@ class Auth extends CI_Controller
             if ($this->upload->do_upload('userfile')) {
                 $data['berkas'] = $this->upload->data('file_name');
                 $this->db->insert('user', $data);
+                $this->db->insert('pengajuan_judul', $d);
                 $this->session->set_flashdata('message', '<div class="alert alert-custom alert-light-success fade show mb-5" role="alert">
                     <div class="alert-icon"><i class="flaticon-check"></i></div>
                     <div class="alert-text">Anda telah melakukan registrasi, Admin akan melakukan aktivasi akun anda segera !</div>

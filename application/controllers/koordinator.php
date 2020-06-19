@@ -82,13 +82,38 @@ class Koordinator extends CI_Controller
 
     public function terima($id)
     {
+        $ambil_dosen = $this->db->get_where('pengajuan_judul', ['id' => $id])->row_array();
+        $data['pildos1'] = $ambil_dosen['pildos1'];
+        $this->db->where('dosen');
+        $this->db->update('dosen', ['kuota' => 2]);
         $this->db->where('id', $id);
         $this->db->update('pengajuan_judul', ['step' => 2]);
         redirect('koordinator');
     }
 
-    public function jadwal()
+    public function ujian_proposal()
     {
-        $this->load->view('koordinator/jadwal');
+        $data['pengajuan_judul'] = $this->db->get_where('pengajuan_judul', ['step' => $this->session->userdata('step')])->row_array();
+        $data['user'] = $this->db->get_where('user', ['email' => $this->session->userdata('email')])->row_array();
+        $this->db->where('acc_dosen1', 1);
+        $this->db->where('acc_dosen2', 1);
+        $data['mahasiswa'] = $this->db->get('pengajuan_judul')->result();
+        $this->load->view('koordinator/header', $data);
+        $this->load->view('koordinator/ujian_proposal', $data);
+        $this->load->view('koordinator/footer', $data);
+    }
+
+    public function set_ujian_proposal()
+    {
+
+        $id = $this->input->post('id');
+
+        $data = [
+            'step' => 3,
+            'jadwal_ujian_proposal' => $this->input->post('kt_datepicker_3')
+        ];
+        $this->db->where('id', $id);
+        $this->db->update('pengajuan_judul', $data);
+        redirect('koordinator/ujian_proposal');
     }
 }

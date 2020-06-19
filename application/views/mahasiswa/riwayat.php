@@ -27,9 +27,8 @@
                   <!--end::Svg Icon-->
                 </span>
               </div>
-              <div class="alert-text">Menu pengelolanan data mahaiswa yang mendaftar Monitoring Tugas Akhir.
-                <br />Info lebih lanjut kunjungi
-                <a class="font-weight-bold" href="www.mischooxl.id" target="_blank">mischool.id</a></div>
+              <div class="alert-text">Perhatikan setiap catatan yang telah diberikan oleh Dosen pembimbing anda dan tetap semangat !
+              </div>
             </div>
             <!--end::Notice-->
             <!--begin::Card-->
@@ -60,44 +59,9 @@
                         </td>
                         <td><?= $mhs->waktu; ?></td>
                         <td>
-                          <button type="button" class="btn btn-primary" data-toggle="modal" data-target="#exampleModalLong">
-                            Catatan
-                          </button>
-                          <!-- Modal -->
-                          <div class="modal fade" id="exampleModalLong" tabindex="-1" role="dialog" aria-labelledby="exampleModalLongTitle" aria-hidden="true">
-                            <div class="modal-dialog" role="document">
-                              <div class="modal-content">
-                                <div class="modal-header">
-                                  <h5 class="modal-title" id="exampleModalLongTitle">Catatan / Komentar dari Dosen</h5>
-                                  <button type="button" class="close" data-dismiss="modal" aria-label="Close">
-                                    <span aria-hidden="true">&times;</span>
-                                  </button>
-                                </div>
-                                <div class="modal-body">
-                                  <div class="card-body">
-                                    <div class="form-group mb-1">
-                                      <label for="exampleTextarea">Catatan :</label>
-                                      <div class="card card-custom gutter-b">
-
-                                        <div class="card-body">
-                                          <!--begin: Datatable-->
-                                          <table class="table table-bordered table-checkable" id="kt_datatable">
-                                            <tbody>
-                                              <tr>
-                                                <td><?= $mhs->catatan; ?></td>
-                                              </tr>
-                                            </tbody>
-                                          </table>
-                                        </div>
-                                      </div>
-                                    </div>
-                                  </div>
-                                  <div class="modal-footer">
-                                    <button type="button" class="btn btn-secondary" data-dismiss="modal">Close</button>
-                                  </div>
-                                </div>
-                              </div>
-                            </div>
+                          <div class="form-group">
+                            <textarea class="form-control" readonly rows="3"><?= $mhs->catatan ?></textarea>
+                          </div>
                         </td>
                       </tr>
                       <?php $i++; ?>

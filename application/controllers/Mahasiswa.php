@@ -15,7 +15,10 @@ class Mahasiswa extends CI_Controller
     public function index()
     {
         $data['user'] = $this->db->get_where('user', ['email' => $this->session->userdata('email')])->row_array();
-
+        $data['mahasiswa'] = $this->db->get_where('pengajuan_judul', ['nim' => $this->session->userdata('no_induk')])->result();
+        $nim = $data['user']['no_induk'];
+        $ambil_step = $this->db->get_where('pengajuan_judul', ['nim' => $nim])->row_array();
+        $data['step'] = $ambil_step['step'];
         $data['dosen'] = $this->db->get('dosen')->result();
         $this->load->view('mahasiswa/header', $data);
         $this->load->view('mahasiswa/index', $data);
@@ -43,13 +46,11 @@ class Mahasiswa extends CI_Controller
         </div>');
             redirect('mahasiswa');
         } else {
+            $this->db->where('nama', $nama);
             $data = [
-                'nama' => $nama,
-                'nim' => $nim,
                 'judul' => $this->input->post('judul'),
                 'pildos1' => $this->input->post('pildos1'),
-                'pildos2' => $this->input->post('pildos2'),
-                'step' => 1
+                'pildos2' => $this->input->post('pildos2')
             ];
 
             $d = [
@@ -67,7 +68,7 @@ class Mahasiswa extends CI_Controller
                 $data['berkas'] = $this->upload->data('file_name');
                 $d['berkas'] = $this->upload->data('file_name');
 
-                $this->db->insert('pengajuan_judul', $data);
+                $this->db->update('pengajuan_judul', $data);
                 $this->db->insert('bimbingan_proposal', $d);
                 $this->session->set_flashdata('message', '<div class="alert alert-custom alert-light-success fade show mb-5" role="alert">
                     <div class="alert-icon"><i class="flaticon-check"></i></div>
@@ -154,10 +155,9 @@ class Mahasiswa extends CI_Controller
 
     public function riwayat()
     {
-        $this->db->group_by("nama");
-        $data['mahasiswa'] = $this->db->get('bimbingan_proposal')->result();
+        $nama = $this->session->userdata('nama');
         $data['user'] = $this->db->get_where('user', ['email' => $this->session->userdata('email')])->row_array();
-
+        $data['mahasiswa'] = $this->db->get_where('bimbingan_proposal', ['nama' => $nama])->result();
         $this->load->view('mahasiswa/header', $data);
         $this->load->view('mahasiswa/riwayat', $data);
         $this->load->view('mahasiswa/footer', $data);

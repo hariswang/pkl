@@ -65,6 +65,7 @@
                         </td>
                         <td><?= $mhs->pildos1; ?></td>
                         <td><?= $mhs->pildos2; ?></td>
+                        <input type="hidden" name="pildos1" value="<?php echo $mhs->pildos1; ?>">
                         <td>
                           <a href="<?php echo site_url(); ?>koordinator/terima/<?= $mhs->id; ?>" class=" btn btn-sm btn-light-primary font-weight-bolder py-2 px-5">Terima</a>
                           <a href="<?php echo site_url(); ?>koordinator/hapus/<?= $mhs->id; ?>" class=" btn btn-sm btn-light-danger font-weight-bolder py-2 px-5">Tolak</a>

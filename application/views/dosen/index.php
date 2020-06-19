@@ -43,7 +43,8 @@
                       <th>NIM</th>
                       <th>Nama</th>
                       <th>Judul Proposal</th>
-                      <th>Aksi</th>
+                      <th>Cek Progres</th>
+                      <th>Acc Prop</th>
                     </tr>
                   </thead>
                   <tbody>
@@ -56,6 +57,10 @@
                         <td><?= $mhs->judul; ?></td>
                         <td>
                           <a href="<?php echo site_url(); ?>dosen/cek_mhs/<?= $mhs->nim; ?>" class=" btn btn-sm btn-light-primary font-weight-bolder py-2 px-5">Cek</a>
+                        </td>
+                        <td><?php if ($mhs->step == 3) {
+                              echo "<a class='btn btn-sm btn-success'><span class='fa fa-check'></span></a>";
+                            }; ?></td>
                         </td>
                       </tr>
                       <?php $i++; ?>

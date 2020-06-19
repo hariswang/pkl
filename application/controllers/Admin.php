@@ -27,8 +27,13 @@ class Admin extends CI_Controller
 
     public function hapus($id)
     {
-        $this->db->where('id', $id);
-        $this->db->delete('user');
+        $q = $this->db->get_where('user', ['id' => $id])->row_array();
+        $nim = $q['no_induk'];
+        $r = $this->db->get_where('pengajuan_judul', ['nim' => $nim])->row_array();
+        $id_baru = $r['id'];
+
+        $this->db->delete('user', array('id' => $id));
+        $this->db->delete('pengajuan_judul', array('id' => $id_baru));
         redirect('admin');
     }
 
