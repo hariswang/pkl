@@ -22,6 +22,14 @@ class Koordinator extends CI_Controller
         $this->load->view('koordinator/footer', $data);
     }
 
+    public function cek_mhs()
+    {
+        $data['user'] = $this->db->get_where('user', ['email' => $this->session->userdata('email')])->row_array();
+        $data['mahasiswa'] = $this->db->get('pengajuan_judul')->result();
+        $this->load->view('koordinator/cek_mhs', $data);
+        $this->load->view('koordinator/footer', $data);
+    }
+
     public function hapus($id)
     {
         $this->db->where('id', $id);
@@ -33,6 +41,7 @@ class Koordinator extends CI_Controller
     public function index_dosen()
     {
         $data['user'] = $this->db->get_where('user', ['email' => $this->session->userdata('email')])->row_array();
+        $this->db->order_by('nama', 'ASC');
         $result['dosen'] = $this->db->get('dosen')->result();
         $this->load->view('koordinator/header', $data);
         $this->load->view('koordinator/index_dosen', $result);
@@ -82,10 +91,7 @@ class Koordinator extends CI_Controller
 
     public function terima($id)
     {
-        $ambil_dosen = $this->db->get_where('pengajuan_judul', ['id' => $id])->row_array();
-        $data['pildos1'] = $ambil_dosen['pildos1'];
-        $this->db->where('dosen');
-        $this->db->update('dosen', ['kuota' => 2]);
+
         $this->db->where('id', $id);
         $this->db->update('pengajuan_judul', ['step' => 2]);
         redirect('koordinator');
@@ -95,11 +101,25 @@ class Koordinator extends CI_Controller
     {
         $data['pengajuan_judul'] = $this->db->get_where('pengajuan_judul', ['step' => $this->session->userdata('step')])->row_array();
         $data['user'] = $this->db->get_where('user', ['email' => $this->session->userdata('email')])->row_array();
+        $data['dosen'] = $this->db->get('dosen')->result();
         $this->db->where('acc_dosen1', 1);
         $this->db->where('acc_dosen2', 1);
         $data['mahasiswa'] = $this->db->get('pengajuan_judul')->result();
         $this->load->view('koordinator/header', $data);
         $this->load->view('koordinator/ujian_proposal', $data);
+        $this->load->view('koordinator/footer', $data);
+    }
+
+    public function ujian_ta()
+    {
+        $data['pengajuan_judul'] = $this->db->get_where('pengajuan_judul', ['step' => $this->session->userdata('step')])->row_array();
+        $data['user'] = $this->db->get_where('user', ['email' => $this->session->userdata('email')])->row_array();
+        $data['dosen'] = $this->db->get('dosen')->result();
+        $this->db->where('acc_dosen1 >=', 3);
+        $this->db->where('acc_dosen2 >=', 3);
+        $data['mahasiswa'] = $this->db->get('pengajuan_judul')->result();
+        $this->load->view('koordinator/header', $data);
+        $this->load->view('koordinator/ujian_ta', $data);
         $this->load->view('koordinator/footer', $data);
     }
 
@@ -110,10 +130,27 @@ class Koordinator extends CI_Controller
 
         $data = [
             'step' => 3,
-            'jadwal_ujian_proposal' => $this->input->post('kt_datepicker_3')
+            'penguji_1' => $this->input->post('penguji1'),
+            'penguji_2' => $this->input->post('penguji2'),
+            'jadwal_ujian_proposal' => $this->input->post('kt_datepicker_3'),
         ];
         $this->db->where('id', $id);
         $this->db->update('pengajuan_judul', $data);
         redirect('koordinator/ujian_proposal');
+    }
+
+    public function set_ujian_ta()
+    {
+
+        $id = $this->input->post('id');
+
+        $data = [
+            'step' => 6,
+            'jadwal_seminar' => $this->input->post('seminar'),
+            'jadwal_ujian_ta' => $this->input->post('kt_datepicker_3'),
+        ];
+        $this->db->where('id', $id);
+        $this->db->update('pengajuan_judul', $data);
+        redirect('koordinator/ujian_ta');
     }
 }

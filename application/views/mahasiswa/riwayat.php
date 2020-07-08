@@ -33,42 +33,44 @@
             <!--end::Notice-->
             <!--begin::Card-->
             <div class="card card-custom gutter-b">
-              <div class="card-body">
-                <!--begin: Datatable-->
-                <table class="table table-bordered table-checkable" id="kt_datatable">
-                  <thead>
-                    <tr>
-                      <th>No.</th>
-                      <th>Laporan Progres</th>
-                      <th>Berkas Proposal</th>
-                      <th>Waktu Penyerahan</th>
-                      <th>Komentar</th>
-                    </tr>
-                  </thead>
-                  <tbody>
-
-                    <?php $i = 1; ?>
-                    <?php foreach ($mahasiswa as $mhs) : ?>
+              <div class="table-responsive">
+                <div class="card-body">
+                  <!--begin: Datatable-->
+                  <table class="table table-bordered table-checkable" id="kt_datatable">
+                    <thead>
                       <tr>
-                        <th scope="row"><?= $i; ?></th>
-                        <td><?= $mhs->progres; ?></td>
-                        <td>
-                          <a class="btn btn-primary btn-sm" target="_blank-page" href="<?php echo base_url(); ?>assets/pdf/<?php echo $mhs->berkas; ?>">
-                            Cek Bukti
-                          </a>
-                        </td>
-                        <td><?= $mhs->waktu; ?></td>
-                        <td>
-                          <div class="form-group">
-                            <textarea class="form-control" readonly rows="3"><?= $mhs->catatan ?></textarea>
-                          </div>
-                        </td>
+                        <th>No.</th>
+                        <th>Laporan Progres</th>
+                        <th>Berkas Proposal</th>
+                        <th>Waktu Penyerahan</th>
+                        <th>Komentar</th>
                       </tr>
-                      <?php $i++; ?>
-                    <?php endforeach; ?>
-                  </tbody>
-                </table>
-                <!--end: Datatable-->
+                    </thead>
+                    <tbody>
+
+                      <?php $i = 1; ?>
+                      <?php foreach ($mahasiswa as $mhs) : ?>
+                        <tr>
+                          <th scope="row"><?= $i; ?></th>
+                          <td><?= $mhs->progres; ?></td>
+                          <td>
+                            <a class="btn btn-primary btn-sm" target="_blank-page" href="<?php echo base_url(); ?>assets/pdf/<?php echo $mhs->berkas; ?>">
+                              Cek Bukti
+                            </a>
+                          </td>
+                          <td><?= $mhs->waktu; ?></td>
+                          <td>
+                            <div class="form-group">
+                              <textarea class="form-control" readonly rows="3"><?= $mhs->catatan ?></textarea>
+                            </div>
+                          </td>
+                        </tr>
+                        <?php $i++; ?>
+                      <?php endforeach; ?>
+                    </tbody>
+                  </table>
+                  <!--end: Datatable-->
+                </div>
               </div>
             </div>
             <!--end::Card-->

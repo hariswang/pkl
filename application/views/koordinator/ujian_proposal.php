@@ -46,7 +46,7 @@
                     <th>Dosen 1</th>
                     <th>Dosen 2</th>
                     <th>Atur Jadwal</th>
-                    <th>Aksi</th>
+                    <th>Jadwal Ujian</th>
                   </tr>
                 </thead>
                 <tbody>
@@ -62,18 +62,63 @@
                         <td><?= $mhs->pildos1; ?></td>
                         <td><?= $mhs->pildos2; ?></td>
                         <td>
-                          <input type="hidden" class="form-control" value="<?= $mhs->id; ?>" name="id" />
-                          <div class="input-group date">
-                            <input type="text" class="form-control" value="<?= $mhs->jadwal_ujian_proposal; ?>" id="kt_datepicker_3" name="kt_datepicker_3" />
-                            <div class="input-group-append">
-                              <span class="input-group-text">
-                                <i class="la la-calendar"></i>
-                              </span>
+
+                          <!-- Button trigger modal -->
+                          <button type="button" class="btn btn-primary" data-toggle="modal" data-target="#exampleModalCenter">
+                            Atur Jadwal
+                          </button>
+
+                          <!-- Modal -->
+                          <div class="modal fade" id="exampleModalCenter" tabindex="-1" role="dialog" aria-labelledby="exampleModalCenterTitle" aria-hidden="true">
+                            <div class="modal-dialog modal-dialog-centered" role="document">
+                              <div class="modal-content">
+                                <div class="modal-header">
+                                  <h5 class="modal-title" id="exampleModalLongTitle">Atur Jadwal Ujian Proposal</h5>
+                                  <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                                    <span aria-hidden="true">&times;</span>
+                                  </button>
+                                </div>
+                                <div class="modal-body">
+                                  <div class="form-group">
+                                    <label>Pilih Dosen Penguji 1</label>
+                                    <div></div>
+                                    <select class="custom-select form-control" name="penguji1" id="penguji1">
+                                      <option value="">Pilih Dosen</option>
+                                      <?php foreach ($dosen as $dsn) : ?>
+                                        <option value="<?php echo $dsn->nama; ?>"><?php echo $dsn->nama; ?></option>
+                                      <?php endforeach; ?>
+                                    </select>
+                                  </div>
+                                  <div class="form-group">
+                                    <label>Pilih Dosen Penguji 2</label>
+                                    <div></div>
+                                    <select class="custom-select form-control" name="penguji2" id="penguji2">
+                                      <option value="">Pilih Dosen</option>
+                                      <?php foreach ($dosen as $dsn) : ?>
+                                        <option value="<?php echo $dsn->nama; ?>"><?php echo $dsn->nama; ?></option>
+                                      <?php endforeach; ?>
+                                    </select>
+                                  </div>
+                                  <input type="hidden" class="form-control" value="<?= $mhs->id; ?>" name="id" />
+                                  <div class="input-group date">
+                                    <input type="text" class="form-control" value="<?= $mhs->jadwal_ujian_proposal; ?>" id="kt_datepicker_3" name="kt_datepicker_3" />
+                                    <div class="input-group-append">
+                                      <span class="input-group-text">
+                                        <i class="la la-calendar"></i>
+                                      </span>
+                                    </div>
+                                  </div>
+                                </div>
+                                <div class="modal-footer">
+                                  <button type="button" class="btn btn-secondary" data-dismiss="modal">Close</button>
+                                  <button type="submit" class=" btn btn-sm btn-light-primary font-weight-bolder py-2 px-5">Set Jadwal</button>
+                                </div>
+                              </div>
                             </div>
                           </div>
                         </td>
                         <td>
-                          <button type="submit" class=" btn btn-sm btn-light-primary font-weight-bolder py-2 px-5">Set Jadwal</button>
+                          <input type="text" class="form-control" value="<?= $mhs->jadwal_ujian_proposal; ?>" disabled="disabled" />
                         </td>
                       </tr>
 

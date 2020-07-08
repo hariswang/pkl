@@ -59,7 +59,7 @@ class Mahasiswa extends CI_Controller
                 'progres' => $this->input->post('judul')
             ];
 
-            $config['allowed_types']        = 'pdf';
+            $config['allowed_types']        = 'pdf|doc|docx';
             $config['encrypt_name']         = TRUE;
             $config['upload_path']          = './assets/pdf/';
             $this->load->library('upload', $config);
@@ -83,7 +83,7 @@ class Mahasiswa extends CI_Controller
             } else {
                 $this->session->set_flashdata('message', '<div class="alert alert-custom alert-light-danger fade show mb-5" role="alert">
                     <div class="alert-icon"><i class="flaticon-check"></i></div>
-                    <div class="alert-text">File berkas harus PDF !</div>
+                    <div class="alert-text">File berkas belum ada, format harus .doc/.docx/.pdf !</div>
                     <div class="alert-close">
                         <button type="button" class="close" data-dismiss="alert" aria-label="Close">
                             <span aria-hidden="true"><i class="ki ki-close"></i></span>
@@ -120,7 +120,7 @@ class Mahasiswa extends CI_Controller
                 'progres' => $this->input->post('judul'),
             ];
 
-            $config['allowed_types']        = 'pdf';
+            $config['allowed_types']        = 'pdf|doc|docx';
             $config['encrypt_name']         = TRUE;
             $config['upload_path']          = './assets/img/';
             $this->load->library('upload', $config);
@@ -130,7 +130,7 @@ class Mahasiswa extends CI_Controller
                 $this->db->insert('bimbingan_proposal', $data);
                 $this->session->set_flashdata('message', '<div class="alert alert-custom alert-light-success fade show mb-5" role="alert">
                     <div class="alert-icon"><i class="flaticon-check"></i></div>
-                    <div class="alert-text">Laporan bimbingan telah terkirim ke dosen !</div>
+                    <div class="alert-text">Laporan Bimbingan Proposal telah terkirim ke dosen !</div>
                     <div class="alert-close">
                         <button type="button" class="close" data-dismiss="alert" aria-label="Close">
                             <span aria-hidden="true"><i class="ki ki-close"></i></span>
@@ -141,13 +141,78 @@ class Mahasiswa extends CI_Controller
             } else {
                 $this->session->set_flashdata('message', '<div class="alert alert-custom alert-light-danger fade show mb-5" role="alert">
                 <div class="alert-icon"><i class="flaticon-check"></i></div>
-                <div class="alert-text">File berkas harus berformat PDF !</div>
+                <div class="alert-text">File berkas harus berformat PDF|.doc|.docx !</div>
                 <div class="alert-close">
                     <button type="button" class="close" data-dismiss="alert" aria-label="Close">
                         <span aria-hidden="true"><i class="ki ki-close"></i></span>
                     </button>
                 </div>
             </div>');
+                redirect('mahasiswa');
+            }
+        }
+    }
+
+    public function step4($no_induk)
+    {
+        $this->db->where('nim', $no_induk);
+        $this->db->update('pengajuan_judul', ['step' => 5]);
+        redirect('mahasiswa');
+    }
+
+    public function step5()
+    {
+        $nama = $this->session->userdata('nama');
+        $nim = $this->session->userdata('no_induk');
+
+        $this->form_validation->set_rules('judul', 'Judul', 'required|trim');
+
+        if ($this->form_validation->run() == false) {
+            $this->session->set_flashdata('allert', '<div class="alert alert-custom alert-light-danger fade show mb-5" role="alert">
+                <div class="alert-icon"><i class="flaticon-check"></i></div>
+                <div class="alert-text">Tolong lengkapi kolom isian !</div>
+                <div class="alert-close">
+                    <button type="button" class="close" data-dismiss="alert" aria-label="Close">
+                        <span aria-hidden="true"><i class="ki ki-close"></i></span>
+                    </button>
+                </div>
+            </div>');
+            redirect('mahasiswa');
+        } else {
+            $data = [
+                'nama' => $nama,
+                'nim' => $nim,
+                'progres' => $this->input->post('judul'),
+            ];
+
+            $config['allowed_types']        = 'pdf|doc|docx';
+            $config['encrypt_name']         = TRUE;
+            $config['upload_path']          = './assets/img/';
+            $this->load->library('upload', $config);
+
+            if ($this->upload->do_upload('berkas')) {
+                $data['berkas'] = $this->upload->data('file_name');
+                $this->db->insert('bimbingan_ta', $data);
+                $this->session->set_flashdata('message', '<div class="alert alert-custom alert-light-success fade show mb-5" role="alert">
+                        <div class="alert-icon"><i class="flaticon-check"></i></div>
+                        <div class="alert-text">Laporan Bimbingan Tugas Akhir telah terkirim ke dosen !</div>
+                        <div class="alert-close">
+                            <button type="button" class="close" data-dismiss="alert" aria-label="Close">
+                                <span aria-hidden="true"><i class="ki ki-close"></i></span>
+                            </button>
+                        </div>
+                    </div>');
+                redirect('mahasiswa');
+            } else {
+                $this->session->set_flashdata('message', '<div class="alert alert-custom alert-light-danger fade show mb-5" role="alert">
+                    <div class="alert-icon"><i class="flaticon-check"></i></div>
+                    <div class="alert-text">File berkas harus berformat PDF|.doc|.docx !</div>
+                    <div class="alert-close">
+                        <button type="button" class="close" data-dismiss="alert" aria-label="Close">
+                            <span aria-hidden="true"><i class="ki ki-close"></i></span>
+                        </button>
+                    </div>
+                </div>');
                 redirect('mahasiswa');
             }
         }

@@ -24,6 +24,7 @@ defined('BASEPATH') or exit('No direct script access allowed');
 |
 */
 $config['base_url'] = 'http://localhost/pkl/';
+// $config['base_url'] = 'http://monita.hummasoft.com/';
 
 /*
 |--------------------------------------------------------------------------

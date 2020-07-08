@@ -4,7 +4,7 @@
     <!-- Default box -->
     <div class="card">
       <div class="card-header">
-        <h3 class="card-title">Daftar Mahasiswa Bimbingan</h3>
+        <h3 class="card-title">Daftar Mahasiswa Bimbingan Proposal</h3>
       </div>
       <div class="card-body">
 
@@ -34,40 +34,78 @@
             <!--end::Notice-->
             <!--begin::Card-->
             <div class="card card-custom gutter-b">
-              <div class="card-body">
-                <!--begin: Datatable-->
-                <table class="table table-bordered table-checkable" id="kt_datatable">
-                  <thead>
-                    <tr>
-                      <th>No.</th>
-                      <th>NIM</th>
-                      <th>Nama</th>
-                      <th>Judul Proposal</th>
-                      <th>Cek Progres</th>
-                      <th>Acc Prop</th>
-                    </tr>
-                  </thead>
-                  <tbody>
-                    <?php $i = 1; ?>
-                    <?php foreach ($mahasiswa as $mhs) : ?>
+              <div class="table-responsive">
+                <div class="card-body">
+                  <!--begin: Datatable-->
+                  <table class="table table-bordered table-checkable" id="kt_datatable">
+                    <thead>
                       <tr>
-                        <th scope="row"><?= $i; ?></th>
-                        <td><?= $mhs->nim; ?></td>
-                        <td><?= $mhs->nama; ?></td>
-                        <td><?= $mhs->judul; ?></td>
-                        <td>
-                          <a href="<?php echo site_url(); ?>dosen/cek_mhs/<?= $mhs->nim; ?>" class=" btn btn-sm btn-light-primary font-weight-bolder py-2 px-5">Cek</a>
-                        </td>
-                        <td><?php if ($mhs->step == 3) {
-                              echo "<a class='btn btn-sm btn-success'><span class='fa fa-check'></span></a>";
-                            }; ?></td>
-                        </td>
+                        <th>No.</th>
+                        <th>NIM</th>
+                        <th>Nama</th>
+                        <th>Judul Proposal</th>
+                        <th>Cek Progres</th>
+                        <th>Informasi Ujian</th>
                       </tr>
-                      <?php $i++; ?>
-                    <?php endforeach; ?>
-                  </tbody>
-                </table>
-                <!--end: Datatable-->
+                    </thead>
+                    <tbody>
+                      <?php $i = 1; ?>
+                      <?php foreach ($mahasiswa as $mhs) : ?>
+                        <tr>
+                          <th scope="row"><?= $i; ?></th>
+                          <td><?= $mhs->nim; ?></td>
+                          <td><?= $mhs->nama; ?></td>
+                          <td><?= $mhs->judul; ?></td>
+                          <td>
+                            <a href="<?php echo site_url(); ?>dosen/cek_mhs/<?= $mhs->nim; ?>" class=" btn btn-sm btn-light-primary font-weight-bolder py-2 px-5">Cek</a>
+                          </td>
+                          <td><button type='button' value="<?= $mhs->id; ?>" class='btn btn-sm btn-light-danger' data-toggle='modal' data-target='#exampleModal-<?= $mhs->id; ?>'>Lihat Detail
+                            </button>
+
+                            <!-- Modal-->
+                            <div class='modal fade' id='exampleModal-<?= $mhs->id; ?>' tabindex='-1' role='dialog' aria-labelledby='exampleModalLabel' aria-hidden='true'>
+                              <div class='modal-dialog' role='document'>
+                                <div class='modal-content'>
+                                  <div class='modal-header'>
+                                    <h5 class='modal-title' id='exampleModalLabel'>Informasi Jadwal Ujian Porposal Mahasiswa</h5>
+                                    <button type='button' class='close' data-dismiss='modal' aria-label='Close'>
+                                      <i aria-hidden='true' class='ki ki-close'></i>
+                                    </button>
+                                  </div>
+                                  <div class='modal-body'>
+                                    <div class='form-group'>
+                                      <label>Tanggal Ujian</label>
+                                      <input type='text' class='form-control' value='<?= $mhs->jadwal_ujian_proposal; ?>' disabled='disabled' placeholder='Disabled input' />
+                                    </div>
+                                    <div class='form-group'>
+                                      <label>Dosen Pembimbing 1</label>
+                                      <input type='text' class='form-control' value='<?= $mhs->pildos1; ?>' disabled='disabled' placeholder='Disabled input' />
+                                    </div>
+                                    <div class='form-group'>
+                                      <label>Dosen Pembimbing 2</label>
+                                      <input type='text' class='form-control' value='<?= $mhs->pildos2; ?>' disabled='disabled' placeholder='Disabled input' />
+                                    </div>
+                                    <div class='form-group'>
+                                      <label>Dosen Penguji 1</label>
+                                      <input type='text' class='form-control' value='<?= $mhs->penguji_1; ?>' disabled='disabled' placeholder='Disabled input' />
+                                    </div>
+                                    <div class='form-group'>
+                                      <label>Dosen Penguji 2</label>
+                                      <input type='text' class='form-control' value='<?= $mhs->penguji_2; ?>' disabled='disabled' placeholder='Disabled input' />
+                                    </div>
+                                  </div>
+                                  <div class='modal-footer'>
+                                    <button type='button' class='btn btn-light-primary font-weight-bold' data-dismiss='modal'>Close</button>
+                                  </div>
+                                </div>
+                              </div>
+                            </div>
+                          </td>
+                          </td>
+                        </tr> <?php $i++; ?> <?php endforeach; ?> </tbody>
+                  </table>
+                  <!--end: Datatable-->
+                </div>
               </div>
             </div>
             <!--end::Card-->

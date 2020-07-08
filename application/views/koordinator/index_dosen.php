@@ -10,7 +10,6 @@
                 +Tambah Dosen
             </button>
 
-
             <!-- Modal -->
             <div class="modal fade" id="exampleModal" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel" aria-hidden="true">
                 <div class="modal-dialog">
@@ -79,34 +78,38 @@
                         <!--end::Notice-->
                         <!--begin::Card-->
                         <div class="card card-custom gutter-b">
-                            <div class="card-body">
-                                <!--begin: Datatable-->
-                                <table class="table table-bordered table-checkable" id="kt_datatable">
-                                    <thead>
-                                        <tr>
-                                            <th>No.</th>
-                                            <th>Nama</th>
-                                            <th>Email</th>
-                                            <th>Aksi</th>
-                                        </tr>
-                                    </thead>
-                                    <tbody>
-
-                                        <?php $i = 1; ?>
-                                        <?php foreach ($dosen as $dsn) : ?>
+                            <div class="table-responsive">
+                                <div class="card-body">
+                                    <!--begin: Datatable-->
+                                    <table class="table table-bordered table-checkable" id="kt_datatable">
+                                        <thead>
                                             <tr>
-                                                <th scope="row"><?= $i; ?></th>
-                                                <td><?= $dsn->nama; ?></td>
-                                                <td><?= $dsn->email; ?></td>
-                                                <td>
-                                                    <a href="<?php echo site_url(); ?>koordinator/hapus/<?= $dsn->id; ?>" class=" btn btn-sm btn-light-danger font-weight-bolder py-2 px-5">Hapus</a>
-                                                </td>
+                                                <th>No.</th>
+                                                <th>Nama</th>
+                                                <th>Email</th>
+                                                <th>Jabatan</th>
+                                                <th>Aksi</th>
                                             </tr>
-                                            <?php $i++; ?>
-                                        <?php endforeach; ?>
-                                    </tbody>
-                                </table>
-                                <!--end: Datatable-->
+                                        </thead>
+                                        <tbody>
+
+                                            <?php $i = 1; ?>
+                                            <?php foreach ($dosen as $dsn) : ?>
+                                                <tr>
+                                                    <th scope="row"><?= $i; ?></th>
+                                                    <td><?= $dsn->nama; ?></td>
+                                                    <td><?= $dsn->email; ?></td>
+                                                    <td><?= $dsn->jabatan; ?></td>
+                                                    <td>
+                                                        <a href="<?php echo site_url(); ?>koordinator/hapus/<?= $dsn->id; ?>" class=" btn btn-sm btn-light-danger font-weight-bolder py-2 px-5">Hapus</a>
+                                                    </td>
+                                                </tr>
+                                                <?php $i++; ?>
+                                            <?php endforeach; ?>
+                                        </tbody>
+                                    </table>
+                                    <!--end: Datatable-->
+                                </div>
                             </div>
                         </div>
                         <!--end::Card-->

@@ -5,6 +5,11 @@
     <div class="card">
       <div class="card-header">
         <h3 class="card-title">Pengajuan Judul Tugas Akhir</h3>
+        <td>
+          <a class="btn btn-primary btn-sm" target="_blank-page" href="<?php echo base_url('koordinator/cek_mhs'); ?>">
+            Cek Data Mahasiswa
+          </a>
+        </td>
       </div>
       <div class="card-body">
 
@@ -34,48 +39,50 @@
             <!--end::Notice-->
             <!--begin::Card-->
             <div class="card card-custom gutter-b">
-              <div class="card-body">
-                <!--begin: Datatable-->
-                <table class="table table-bordered table-checkable" id="kt_datatable">
-                  <thead>
-                    <tr>
-                      <th>No.</th>
-                      <th>NIM</th>
-                      <th>Nama</th>
-                      <th>Judul Proposal</th>
-                      <th>Berkas</th>
-                      <th>Dosen 1</th>
-                      <th>Dosen 2</th>
-                      <th>Aksi</th>
-                    </tr>
-                  </thead>
-                  <tbody>
-
-                    <?php $i = 1; ?>
-                    <?php foreach ($mahasiswa as $mhs) : ?>
+              <div class="table-responsive">
+                <div class="card-body">
+                  <!--begin: Datatable-->
+                  <table class="table table-bordered table-checkable" id="kt_datatable">
+                    <thead>
                       <tr>
-                        <th scope="row"><?= $i; ?></th>
-                        <td><?= $mhs->nim; ?></td>
-                        <td><?= $mhs->nama; ?></td>
-                        <td><?= $mhs->judul; ?></td>
-                        <td>
-                          <a class="btn btn-primary btn-sm" target="_blank-page" href="<?php echo base_url(); ?>assets/pdf/<?php echo $mhs->berkas; ?>">
-                            Cek Bukti
-                          </a>
-                        </td>
-                        <td><?= $mhs->pildos1; ?></td>
-                        <td><?= $mhs->pildos2; ?></td>
-                        <input type="hidden" name="pildos1" value="<?php echo $mhs->pildos1; ?>">
-                        <td>
-                          <a href="<?php echo site_url(); ?>koordinator/terima/<?= $mhs->id; ?>" class=" btn btn-sm btn-light-primary font-weight-bolder py-2 px-5">Terima</a>
-                          <a href="<?php echo site_url(); ?>koordinator/hapus/<?= $mhs->id; ?>" class=" btn btn-sm btn-light-danger font-weight-bolder py-2 px-5">Tolak</a>
-                        </td>
+                        <th>No.</th>
+                        <th>NIM</th>
+                        <th>Nama</th>
+                        <th>Judul Proposal</th>
+                        <th>Berkas</th>
+                        <th>Dosen 1</th>
+                        <th>Dosen 2</th>
+                        <th>Aksi</th>
                       </tr>
-                      <?php $i++; ?>
-                    <?php endforeach; ?>
-                  </tbody>
-                </table>
-                <!--end: Datatable-->
+                    </thead>
+                    <tbody>
+
+                      <?php $i = 1; ?>
+                      <?php foreach ($mahasiswa as $mhs) : ?>
+                        <tr>
+                          <th scope="row"><?= $i; ?></th>
+                          <td><?= $mhs->nim; ?></td>
+                          <td><?= $mhs->nama; ?></td>
+                          <td><?= $mhs->judul; ?></td>
+                          <td>
+                            <a class="btn btn-primary btn-sm" target="_blank-page" href="<?php echo base_url(); ?>assets/pdf/<?php echo $mhs->berkas; ?>">
+                              Cek Bukti
+                            </a>
+                          </td>
+                          <td><?= $mhs->pildos1; ?></td>
+                          <td><?= $mhs->pildos2; ?></td>
+                          <input type="hidden" name="pildos1" value="<?php echo $mhs->pildos1; ?>">
+                          <td>
+                            <a href="<?php echo site_url(); ?>koordinator/terima/<?= $mhs->id; ?>" class=" btn btn-sm btn-light-primary font-weight-bolder py-2 px-5">Terima</a>
+                            <a href="<?php echo site_url(); ?>koordinator/hapus/<?= $mhs->id; ?>" class=" btn btn-sm btn-light-danger font-weight-bolder py-2 px-5">Tolak</a>
+                          </td>
+                        </tr>
+                        <?php $i++; ?>
+                      <?php endforeach; ?>
+                    </tbody>
+                  </table>
+                  <!--end: Datatable-->
+                </div>
               </div>
             </div>
             <!--end::Card-->

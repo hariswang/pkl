@@ -29,10 +29,8 @@
                 <?= $this->session->flashdata('message'); ?>
                 <!--begin::Item-->
 
-
                 <div class="timeline-item align-items-start">
                   <!--begin::Label-->
-
 
                   <!-- step 1 -->
                   <div class="timeline-label font-weight-bolder text-dark-75 font-size-lg text-right pr-3">Step 1</div>
@@ -55,7 +53,7 @@
                           <div class="card-body">
                             <div class="form-group mb-1">
                               <label for="exampleTextarea">Masukan Judul Tugas Akhir</label>
-                              <textarea class="form-control" id="exampleTextarea" rows="3" name="judul"></textarea>
+                              <textarea class="form-control" id="exampleTextarea" rows="3" name="judul" value="<?= set_value('judul'); ?>"></textarea>
                             </div>
                             <div class="form-group">
                               <label>Pilih Dosen Pembimbing 1</label>
@@ -63,7 +61,7 @@
                               <select class="custom-select form-control" name="pildos1" id="pildos1">
                                 <option value="">Pilih Dosen</option>
                                 <?php foreach ($dosen as $dsn) : ?>
-                                  <option value="<?php echo $dsn->nama; ?>"><?php echo $dsn->nama; ?></option>
+                                  <option value="<?php echo ($dsn->nama); ?>"><?php echo $dsn->nama; ?></option>
                                 <?php endforeach; ?>
                               </select>
                             </div>
@@ -82,7 +80,7 @@
                               <div></div>
                               <div class="custom-file">
                                 <input type="file" class="custom-file-input" id="berkas" name="berkas" />
-                                <label class="custom-file-label" for="customFile">Choose PDF file</label>
+                                <label class="custom-file-label" for="customFile">Choose file</label>
                               </div>
                             </div>
                             <div>
@@ -132,14 +130,14 @@
                             </div>
                             <div class="form-group">
                               <label>Masukan Judul Progres</label>
-                              <input type="text" class="form-control" placeholder="Judul Progres" name="judul" />
+                              <input type="text" class="form-control" placeholder="Judul Progres" name="judul" value="<?= set_value('judul'); ?>" />
                             </div>
                             <div class="form-group">
                               <label>Upload Berkas Proposal</label>
                               <div></div>
                               <div class="custom-file">
                                 <input type="file" class="custom-file-input" id="customFile" name="berkas" required />
-                                <label class="custom-file-label" for="customFile">Choose PDF file</label>
+                                <label class="custom-file-label" for="customFile">Choose file</label>
                               </div>
                             </div>
                             <button type="submit" class="btn btn-primary mr-2">Submit</button>
@@ -173,12 +171,44 @@
                         <?php foreach ($mahasiswa as $mhs) {
                         } ?>
                         <div class="card-body">
-                          <div class="form-group">
+                          <div class="form-group col-7">
                             <p>
                               <b>
                                 <font size="5" color="red"><?= $mhs->jadwal_ujian_proposal; ?></font>
                               </b>
                             </p>
+                            <div class="form-group">
+                              <label>
+                                <b>
+                                  <font>Dosen Pembimbing 1</font>
+                                </b>
+                              </label>
+                              <input type="text" class="form-control" value="<?= $mhs->pildos1; ?>" disabled="disabled" placeholder="Disabled input" />
+                            </div>
+                            <div class="form-group">
+                              <label>
+                                <b>
+                                  <font>Dosen Pembimbing 2</font>
+                                </b>
+                              </label>
+                              <input type="text" class="form-control" value="<?= $mhs->pildos2; ?>" disabled="disabled" placeholder="Disabled input" />
+                            </div>
+                            <div class="form-group">
+                              <label>
+                                <b>
+                                  <font>Dosen Penguji 1</font>
+                                </b>
+                              </label>
+                              <input type="text" class="form-control" value="<?= $mhs->penguji_1; ?>" disabled="disabled" placeholder="Disabled input" />
+                            </div>
+                            <div class="form-group">
+                              <label>
+                                <b>
+                                  <font>Dosen Penguji 2</font>
+                                </b>
+                              </label>
+                              <input type="text" class="form-control" value="<?= $mhs->penguji_2; ?>" disabled="disabled" placeholder="Disabled input" />
+                            </div>
                           </div>
                         </div>
                       <?php } ?>
@@ -204,7 +234,7 @@
                     <div class="card card-custom">
                       <?php if ($step == 4) { ?>
                         <!--begin::Form-->
-                        <form class="form" method="post" action="<?= base_url('mahasiswa/step2') ?>" enctype="multipart/form-data">
+                        <form class="form" method="post" action="<?= base_url('mahasiswa/step4') ?>" enctype="multipart/form-data">
                           <div class="card-body">
                             <div class="form-group form-group-last">
                               <div class="alert alert-custom alert-default" role="alert">
@@ -216,7 +246,7 @@
                             </div>
                             <div class="form-group">
                               <label>Masukan Judul Revisi</label>
-                              <input type="text" class="form-control" placeholder="Judul Progres" name="judul" />
+                              <input type="text" class="form-control" placeholder="Judul Progres" name="judul" value="<?= set_value('judul'); ?>" />
                             </div>
                             <div class="form-group">
                               <label>Upload Berkas Proposal</label>
@@ -228,6 +258,7 @@
                             </div>
                             <button type="submit" class="btn btn-primary mr-2">Submit</button>
                             <button type="reset" class="btn btn-secondary">Cancel</button>
+                            <a href="<?php echo site_url(); ?>mahasiswa/step4/<?= $user['no_induk']; ?>" class=" btn btn-success float-right font-weight-bolder py-2 px-5">Lanjut (Tidak ada revisi)</a>
                           </div>
                         </form>
                         <!--end::Form-->
@@ -249,7 +280,39 @@
                   <!--begin::Text-->
                   <div class="timeline-content text-dark-50">
                     <div class="timeline-content d-flex">
-                      <h4><span class="mr-4 font-weight-bolder text-dark-75">Mengerjakan Tugas Akhir</span></h4>
+                      <h4><span class="mr-4 font-weight-bolder text-dark-75">Bimbingan Tugas Akhir</span></h4>
+                    </div>
+                    <div class="card card-custom">
+                      <?php if ($step == 5) { ?>
+                        <!--begin::Form-->
+                        <form class="form" method="post" action="<?= base_url('mahasiswa/step5'); ?>" enctype="multipart/form-data">
+                          <div class="card-body">
+                            <div class="form-group form-group-last">
+                              <div class="alert alert-custom alert-default" role="alert">
+                                <div class="alert-icon"><i class="flaticon-warning text-primary"></i></div>
+                                <div class="alert-text">
+                                  Contoh : Progress bab 4
+                                </div>
+                              </div>
+                            </div>
+                            <div class="form-group">
+                              <label>Masukan Judul Progres</label>
+                              <input type="text" class="form-control" placeholder="Judul Progres" name="judul" value="<?= set_value('judul'); ?>" />
+                            </div>
+                            <div class="form-group">
+                              <label>Upload Berkas Proposal</label>
+                              <div></div>
+                              <div class="custom-file">
+                                <input type="file" class="custom-file-input" id="customFile" name="berkas" required />
+                                <label class="custom-file-label" for="customFile">Choose file</label>
+                              </div>
+                            </div>
+                            <button type="submit" class="btn btn-primary mr-2">Submit</button>
+                            <button type="reset" class="btn btn-secondary">Cancel</button>
+                          </div>
+                        </form>
+                        <!--end::Form-->
+                      <?php } ?>
                     </div>
                   </div>
                   <!--end::Text-->
@@ -268,39 +331,63 @@
                   <!--begin::Text-->
                   <div class="timeline-content text-dark-50">
                     <div class="timeline-content d-flex">
-                      <h4><span class="mr-4 font-weight-bolder text-dark-75">Bimbingan Tugas Akhir</span></h4>
+                      <h4><span class="mr-4 font-weight-bolder text-dark-75">Jadwal Seminar dan Sidang Tugas Akhir</span></h4>
                     </div>
                     <div class="card card-custom">
                       <?php if ($step == 6) { ?>
                         <!--begin::Form-->
-                        <form class="form" method="post" action="<?= base_url('mahasiswa/step2') ?>" enctype="multipart/form-data">
-                          <div class="card-body">
-                            <div class="form-group form-group-last">
-                              <div class="alert alert-custom alert-default" role="alert">
-                                <div class="alert-icon"><i class="flaticon-warning text-primary"></i></div>
-                                <div class="alert-text">
-                                  Contoh : Upload Progres Bab I
-                                </div>
-                              </div>
+                        <?php foreach ($mahasiswa as $mhs) {
+                        } ?>
+                        <div class="card-body">
+                          <div class="form-group col-7">
+                            <p>
+                              <b>
+                                <font>Jadwal Seminar : </font>
+                                <font size="5" color="red"><?= $mhs->jadwal_seminar; ?></font>
+                              </b>
+                            </p>
+                            <p>
+                              <b>
+                                <font>Jadwal Ujian Tugas Akhir : </font>
+                                <font size="5" color="red"><?= $mhs->jadwal_ujian_ta; ?></font>
+                              </b>
+                            </p>
+                            <div class="form-group">
+                              <label>
+                                <b>
+                                  <font>Dosen Pembimbing 1</font>
+                                </b>
+                              </label>
+                              <input type="text" class="form-control" value="<?= $mhs->pildos1; ?>" disabled="disabled" placeholder="Disabled input" />
                             </div>
                             <div class="form-group">
-                              <label>Masukan Judul Progres</label>
-                              <input type="text" class="form-control" placeholder="Judul Progres" name="judul" />
+                              <label>
+                                <b>
+                                  <font>Dosen Pembimbing 2</font>
+                                </b>
+                              </label>
+                              <input type="text" class="form-control" value="<?= $mhs->pildos2; ?>" disabled="disabled" placeholder="Disabled input" />
                             </div>
                             <div class="form-group">
-                              <label>Upload Berkas Proposal</label>
-                              <div></div>
-                              <div class="custom-file">
-                                <input type="file" class="custom-file-input" id="customFile" name="berkas" />
-                                <label class="custom-file-label" for="customFile">Choose PDF file</label>
-                              </div>
+                              <label>
+                                <b>
+                                  <font>Dosen Penguji 1</font>
+                                </b>
+                              </label>
+                              <input type="text" class="form-control" value="<?= $mhs->penguji_1; ?>" disabled="disabled" placeholder="Disabled input" />
                             </div>
-                            <button type="submit" class="btn btn-primary mr-2">Submit</button>
-                            <button type="reset" class="btn btn-secondary">Cancel</button>
+                            <div class="form-group">
+                              <label>
+                                <b>
+                                  <font>Dosen Penguji 2</font>
+                                </b>
+                              </label>
+                              <input type="text" class="form-control" value="<?= $mhs->penguji_2; ?>" disabled="disabled" placeholder="Disabled input" />
+                            </div>
                           </div>
-                        </form>
-                        <!--end::Form-->
+                        </div>
                       <?php } ?>
+                      <!--end form-->
                     </div>
                   </div>
                   <!--end::Text-->
@@ -309,25 +396,6 @@
                 <div class="timeline-item align-items-start">
                   <!--begin::Label-->
                   <div class="timeline-label font-weight-bolder text-dark-75 font-size-lg text-right pr-3">Step 7</div>
-                  <!--end::Label-->
-                  <!--begin::Badge-->
-                  <div class="timeline-badge">
-                    <i class="fa fa-genderless text-info icon-xxl"></i>
-                  </div>
-                  <!--end::Badge-->
-                  <!--begin::Text-->
-                  <div class="timeline-content text-dark-50">
-                    <div class="timeline-content d-flex">
-                      <h4><span class="mr-4 font-weight-bolder text-dark-75">Jadwal Sidang Tugas Akhir</span></h4>
-                    </div>
-                  </div>
-                  <!--end::Text-->
-                </div>
-
-
-                <div class="timeline-item align-items-start">
-                  <!--begin::Label-->
-                  <div class="timeline-label font-weight-bolder text-dark-75 font-size-lg text-right pr-3">Step 8</div>
                   <!--end::Label-->
                   <!--begin::Badge-->
                   <div class="timeline-badge">
@@ -340,7 +408,7 @@
                       <h4><span class="mr-4 font-weight-bolder text-dark-75">Revisi Tugas Akhir</span></h4>
                     </div>
                     <div class="card card-custom">
-                      <?php if ($step == 8) { ?>
+                      <?php if ($step == 7) { ?>
                         <!--begin::Form-->
                         <form class="form" method="post" action="<?= base_url('mahasiswa/step2') ?>" enctype="multipart/form-data">
                           <div class="card-body">
@@ -354,7 +422,7 @@
                             </div>
                             <div class="form-group">
                               <label>Masukan Judul Revisi</label>
-                              <input type="text" class="form-control" placeholder="Judul Progres" name="judul" />
+                              <input type="text" class="form-control" placeholder="Judul Progres" name="judul" value="<?= set_value('judul'); ?>" />
                             </div>
                             <div class="form-group">
                               <label>Upload Berkas Proposal</label>
@@ -391,7 +459,7 @@
                     </div>
                     <div class="card card-custom">
                       <!--begin::Form-->
-                      <?php if ($step == 9) { ?>
+                      <?php if ($step == 8) { ?>
                         <form class="form" method="post" action="<?= base_url('mahasiswa/step2') ?>" enctype="multipart/form-data">
                           <div class="card-body">
                             <div class="form-group form-group-last">
